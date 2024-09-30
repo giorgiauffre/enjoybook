@@ -1,0 +1,33 @@
+<div class="container">
+    <div class="header">
+        <a href="initialPage" class="back-button"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg></a>
+       </div>
+
+       
+      <div class="form">
+        <label for="title">TITLE</label>
+        <input type="text" id="tile" name="title" placeholder="title" [(ngModel)]="title">
+
+        <label for="bookGenre">BOOK GENRE</label>
+        <input type="text" id="bookGenre" name="bookGenre" placeholder="book genre" [(ngModel)]="genre">
+
+  
+       <label for="author">AUTHOR</label>
+       <input type="text" id="author" name="author" placeholder="author" [(ngModel)]="author">
+
+
+       <label for="edition">LANGUAGE</label>
+      <input type="text" id="language" name="language" placeholder="language" [(ngModel)]="language">
+
+      <label for="edition">YEAR</label>
+      <input type="text" id="year" name="year" placeholder="year"[(ngModel)]="year">
+
+      <label for="edition">DESCRIPTION</label>
+      <input type="text" id="description" name="description" placeholder="description" [(ngModel)]="description">
+
+        <div class="button-container">
+       <button class="button" id="upload" (click)="clickUpload()">UPLOAD</button>
+        </div>
+        </div>
+      </div>
+

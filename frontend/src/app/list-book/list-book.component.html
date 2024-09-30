@@ -1,0 +1,57 @@
+<div class="container">
+    <header class="header">
+        <a href="initialPage" class="back-button" aria-label="Torna alla pagina iniziale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </a>
+    </header>
+
+    <section *ngIf="books && books.length > 0">
+        <h1>BOOK LIST</h1>
+        <div class="book-list">
+            <article *ngFor="let book of books" class="book-card">
+                <h2>{{ book.title }}</h2>
+                <p><strong>Author:</strong> {{ book.author }}</p>
+                <p><strong>Genre:</strong> {{ book.genre }}</p>
+                <p><strong>Language:</strong> {{ book.language }}</p>
+                <p><strong>Year:</strong> {{ book.year }}</p>
+                <p><strong>Description:</strong> {{ book.description }}</p>
+                <button (click)="deleteBook(book.id)" class="delete-button">Delete</button>
+                <button (click)="openEditModal(book)" class="modify-button">Modify</button>
+            </article>
+        </div>
+    </section>
+
+    <section *ngIf="books.length === 0">
+        <p class="no-books-message">No books available.</p>
+    </section>
+
+    <div *ngIf="isEditing" class="modal">
+        <div class="modal-content">
+            <h2>Edit Book</h2>
+            <form (ngSubmit)="updateBook()">
+                <label for="title">Title:</label>
+                <input type="text" id="title" [(ngModel)]="currentBook.title" name="title" required>
+
+                <label for="author">Author:</label>
+                <input type="text" id="author" [(ngModel)]="currentBook.author" name="author" required>
+
+                <label for="genre">Genre:</label>
+                <input type="text" id="genre" [(ngModel)]="currentBook.genre" name="genre" required>
+
+                <label for="year">Year:</label>
+                <input type="number" id="year" [(ngModel)]="currentBook.year" name="year">
+
+                <label for="language">Language:</label>
+                <input type="text" id="language" [(ngModel)]="currentBook.language" name="language">
+
+                <label for="description">Description:</label>
+                <textarea id="description" [(ngModel)]="currentBook.description" name="description"></textarea>
+
+                <button type="submit">Update</button>
+                <button type="button" (click)="closeEditModal()">Cancel</button>
+            </form>
+        </div>
+    </div>
+</div>

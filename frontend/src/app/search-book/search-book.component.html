@@ -1,0 +1,59 @@
+
+
+<div class="container">
+    <div class="header">
+        <h1 class="phrase">Seach your book and find yourself! </h1>
+        <a href="initialPage" class="back-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </a>
+    </div>
+
+    <div class="search-bar">
+        <input class="input" [(ngModel)]="searchQuery" type="search" id="search" name="search" placeholder="Search your book">
+        <button class="search" id="search-btn" (click)="searchBooks()">SEARCH</button>
+    </div>
+</div>
+    
+<div *ngIf="books.length > 0" class="book-list">
+    <h2 style="margin-left: 10px;">Search Results:</h2>
+    <div class="card-container">
+        <div class="card" *ngFor="let book of books">
+            <div class="card-content">
+                <h3 style="font-weight: bold;">{{ book.title }}</h3>
+                <p>Author: {{ book.author }}</p>
+                <button class="review-button" (click)="openReviewModal(book)">Leave a Review</button>
+                <button class="contact-button" (click)="showContactInfo(book)">Contact Owner</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div *ngIf="showReview || showContact" class="modal-backdrop"></div>
+
+<div *ngIf="showReview" class="modal">
+    <h2>Leave a Review</h2>
+    <input type="text" placeholder="review" [(ngModel)]="review">
+    <button (click)="submitReview()" class="modal-button">Submit Review</button>
+    <button (click)="showReview = false" class="modal-button">Close</button>
+</div>
+
+
+
+  
+  <div *ngIf="showContact" class="modal">
+    <h3>Contact Owner</h3>
+    <div *ngIf="ownerInfo">
+      <p><strong>Name:</strong> {{ ownerInfo.name }} {{ ownerInfo.surname }}</p>
+      <p><strong>Email:</strong> {{ ownerInfo.email }}</p>
+      <p><strong>Telephone:</strong> {{ ownerInfo.telephone }}</p>
+      <p><strong>Social Media:</strong> {{ ownerInfo.social_media }}</p>
+      <button (click)="showContact = false" class="modal-button">Close</button>
+    </div>
+    <div *ngIf="!ownerInfo">
+      <p>No owner information available.</p>
+      <button (click)="showContact = false" class="modal-button">Close</button>
+    </div>
+  </div>
+  
