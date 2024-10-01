@@ -42,6 +42,8 @@ export class SearchBookComponent {
     this.showReview = false; 
 }
 
+// aggiungere la funzione retrieve info by username
+
   submitReview() {
     const reviewData = {
       description : this.review,

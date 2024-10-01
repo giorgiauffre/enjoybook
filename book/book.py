@@ -112,7 +112,7 @@ def get_reviews(book_id):
 def search_books():
     query = request.args.get('q')
     books = Book.query.filter(Book.title.contains(query) | Book.author.contains(query)).all()
-    books_list = [{'id': book.id, 'title': book.title, 'author': book.author} for book in books]
+    books_list = [{'id': book.id, 'title': book.title, 'author': book.author, 'genre': book.genre, 'year': book.year, 'language': book.language, 'description': book.description, 'owner':book.owner } for book in books]
     return jsonify(books_list)
 
 
