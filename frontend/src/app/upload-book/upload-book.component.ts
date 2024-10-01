@@ -27,6 +27,7 @@ export class UploadBookComponent {
       year: this.year,
       language: this.language,
       description: this.description,
+      owner: localStorage.getItem('username')
     };
 
     this.errorMessages = [];

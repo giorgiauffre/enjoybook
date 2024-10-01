@@ -53,14 +53,14 @@ class APITestCase(unittest.TestCase):
 
     def test_add_review(self):
         # First, add a book
-        response = self.app.post('/books', 
+        response = self.app.post('/books',
                                  data=json.dumps({'title': 'Book for Review', 'author': 'Author', 'genre': 'Genre', 'year': 2021}),
                                  content_type='application/json')
         book_id = json.loads(response.data)['id']
 
         # Now, add a review
         response = self.app.post(f'/books/{book_id}/reviews',
-                                 data=json.dumps({'score': 5, 'user_id': 1}),
+                                 data=json.dumps({'score': 5, 'description': 'molto bello', 'user_id': 1}),
                                  content_type='application/json')
         self.assertEqual(response.status_code, 201)
         self.assertIn('Review added', str(response.data))

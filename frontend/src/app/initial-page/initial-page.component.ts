@@ -18,31 +18,26 @@ export class InitialPageComponent {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
+        sessionStorage.clear;
         this.router.navigateByUrl('/');
       }
     });
   }
 
+  goToUploadBook(){
+    this.router.navigateByUrl('uploadBook');
+  }
 
-    goToUploadBook(){
-      this.router.navigateByUrl('uploadBook');
+  goToSearchBook(){
+    this.router.navigateByUrl('searchBook');
+  }
 
-    }
+  goToListBook(){
+    this.router.navigateByUrl('listBook');
+  }
 
-    goToSearchBook(){
-      this.router.navigateByUrl('searchBook');
-
-    }
-
-    goToListBook(){
-      this.router.navigateByUrl('listBook');
-
-
-    }
-
-
-    goToUserProfile(){
-      this.router.navigateByUrl('userProfile');
-    }
+  goToUserProfile(){
+    this.router.navigateByUrl('userProfile');
+  }
 
 }

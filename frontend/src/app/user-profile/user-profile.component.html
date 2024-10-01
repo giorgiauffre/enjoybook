@@ -28,7 +28,7 @@
         <h2>Edit User Profile</h2>
         <form (ngSubmit)="updateUser()">
             <label for="username">Username:</label>
-            <input type="text" id="username" [(ngModel)]="currentUser.username" name="username" required>
+            <input type="text" id="username" [(ngModel)]="currentUser.username" name="username" disabled>
 
             <label for="name">Name:</label>
             <input type="text" id="name" [(ngModel)]="currentUser.name" name="name" required>

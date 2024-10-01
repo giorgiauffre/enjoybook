@@ -27,23 +27,25 @@ class Book(db.Model):
 
 class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    description = db.Column(db.String, nullable = True)
     score = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, nullable=False)
+ #   user_id = db.Column(db.Integer, nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
 
 # app.py
 from flask import Flask, request, jsonify
-from flask_cors import CORS
+from flask_cors import CORS, cross_origin
 
 #from models import db, Book, Review
 #from elasticsearch import Elasticsearch
 #from config import Config
 
 app = Flask(__name__)
-app.config.from_object(Config)
-db.init_app(app)
 
 CORS(app)
+
+app.config.from_object(Config)
+db.init_app(app)
 
 # Initialize Elasticsearch client
 #es = Elasticsearch([Config.ELASTICSEARCH_URL])
@@ -52,6 +54,7 @@ CORS(app)
 def create_tables():
     db.create_all()
 '''
+@cross_origin
 @app.route('/books', methods=['POST'])
 def add_book():
     data = request.json
@@ -64,7 +67,8 @@ def add_book():
 
 @app.route('/books', methods=['GET'])
 def get_books():
-    books = Book.query.all()
+    owner = request.args.get('owner_id')
+    books = Book.query.filter_by(owner=owner).all()
     books_list = [{'id': book.id, 'title': book.title, 'author': book.author, 'genre': book.genre, 'year': book.year, 'language': book.language, 'description': book.description, 'owner':book.owner} for book in books]
     return jsonify(books_list), 200
 
@@ -94,7 +98,7 @@ def delete_book(book_id):
 @app.route('/books/<book_id>/reviews', methods=['POST'])
 def add_review(book_id):
     data = request.json
-    new_review = Review(book_id=book_id, **data)
+    new_review = Review(**data)
     db.session.add(new_review)
     db.session.commit()
     return jsonify({'message': 'Review added', 'id': new_review.id}), 201
@@ -102,23 +106,7 @@ def add_review(book_id):
 @app.route('/books/<book_id>/reviews', methods=['GET'])
 def get_reviews(book_id):
     reviews = Review.query.filter_by(book_id=book_id).all()
-    return jsonify([{'id': review.id, 'score': review.score, 'user_id': review.user_id} for review in reviews])
-'''
-@app.route('/search', methods=['GET'])
-def search_books():
-    query = request.args.get('q')
-    search_body = {
-        "query": {
-            "multi_match": {
-                "query": query,
-                "fields": ["title", "author", "genre", "description"]
-            }
-        }
-    }
-    res = es.search(index='books', body=search_body)
-    return jsonify(res['hits']['hits'])
-
-'''
+    return jsonify([{'id': review.id, 'score': review.score, 'book_id': review.book_id} for review in reviews])
 
 @app.route('/search', methods=['GET'])
 def search_books():
@@ -126,7 +114,6 @@ def search_books():
     books = Book.query.filter(Book.title.contains(query) | Book.author.contains(query)).all()
     books_list = [{'id': book.id, 'title': book.title, 'author': book.author} for book in books]
     return jsonify(books_list)
-
 
 
 if __name__ == '__main__':

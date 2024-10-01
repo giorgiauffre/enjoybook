@@ -1,5 +1,5 @@
 Flask 
 Flask-SQLAlchemy 
 Flask-Migrate 
-elasticsearch
 Flask-Cors
+elasticsearch

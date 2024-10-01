@@ -11,6 +11,7 @@ export class SearchBookComponent {
   searchQuery: string = '';  
   books: any[] = [];         
   selectedBook: any = null;  
+  score: any = 0;
   review: string = '';     
   showContact: boolean = false; 
   showReview: boolean = false;  
@@ -39,15 +40,13 @@ export class SearchBookComponent {
     this.selectedBook = book; 
     this.showContact = true; 
     this.showReview = false; 
-
-   
 }
-
 
   submitReview() {
     const reviewData = {
-      user_id: this.review,  
-      score: 5 
+      description : this.review,
+      score: this.score,
+      book_id: this.selectedBook.id
     };
 
     this.bookService.addReview(this.selectedBook.id, reviewData).subscribe(() => {

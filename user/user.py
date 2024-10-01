@@ -72,7 +72,7 @@ def login():
     
     if user and bcrypt.check_password_hash(user.password, data['password']):
         access_token = create_access_token(identity=user.username)
-        return jsonify(access_token=access_token), 200
+        return jsonify(access_token=access_token, username=user.username), 200
     return jsonify({"message": "Invalid username or password"}), 401
 
 # Route to update a user's info
@@ -158,10 +158,8 @@ def get_reviews(target_user_id):
     return jsonify(review_list), 200
 
 
-
-
 if __name__ == '__main__':
     with app.app_context():
         db.create_all()
-    app.run(host='0.0.0.0', port=5004, debug=True) 
+    app.run(host='0.0.0.0', port=5000, debug=True) 
 

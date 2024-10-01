@@ -12,31 +12,28 @@ export class BookService {
   httpClient = inject(HttpClient);
   baseUrl = 'http://localhost:5001';
 
-  getHeaders(){
-    let headers = new HttpHeaders();
-    return headers.set('Content-Type', 'application/json; charset=utf-8');
+  getHeaders() {
+    let headers = new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+    });
+    return headers;
   }
 
   addBook(bookData: any): Observable<any> {
-    let headers = new HttpHeaders();
-    headers = headers.set('Content-Type', 'application/json; charset=utf-8');
-    return this.httpClient.post<any>(`${this.baseUrl}/books`, bookData, { headers });
+    return this.httpClient.post<any>(`${this.baseUrl}/books`, bookData, { headers: this.getHeaders() });
   }
 
-  getBooks(): Observable<any[]> {
-    return this.httpClient.get<any[]>(`${this.baseUrl}/books`, { headers: this.getHeaders() });
+  getBooks(owner_id: any): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}/books?owner_id=${owner_id}`, { headers: this.getHeaders() });
   }
-
 
   deleteBook(bookId: number): Observable<any> {
     return this.httpClient.delete<any>(`${this.baseUrl}/books/${bookId}`, { headers: this.getHeaders() });
   }
-
  
   updateBook(bookId: number, bookData: any): Observable<any> {
     return this.httpClient.put<any>(`${this.baseUrl}/books/${bookId}`, bookData, { headers: this.getHeaders() });
   }
-
 
   searchBooks(query: string): Observable<any[]> {
     return this.httpClient.get<any[]>(`${this.baseUrl}/search?q=${query}`, { headers: this.getHeaders() });
@@ -44,6 +41,10 @@ export class BookService {
   
   addReview(bookId: number, reviewData: any): Observable<any> {
     return this.httpClient.post<any>(`${this.baseUrl}/books/${bookId}/reviews`, reviewData, { headers: this.getHeaders() });
+  }
+
+  getReviews(book_id: any): Observable<any> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}/books/${book_id}/reviews`, { headers: this.getHeaders() });
   }
   
 }

@@ -11,16 +11,15 @@ export class ListBookComponent implements OnInit {
   currentBook: any; 
   isEditing: boolean = false; 
 
-
   constructor(private bookService: BookService) {}
 
   ngOnInit() {
     this.fetchData(); 
   }
 
-
   fetchData() {
-    this.bookService.getBooks().subscribe(
+    let owner_id = localStorage.getItem("username");
+    this.bookService.getBooks(owner_id).subscribe(
       (response) => {
         this.books = response; 
         console.log(this.books); 
@@ -69,6 +68,5 @@ export class ListBookComponent implements OnInit {
       }
     );
   }
-
 
 }

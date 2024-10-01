@@ -35,25 +35,23 @@
 <div *ngIf="showReview" class="modal">
     <h2>Leave a Review</h2>
     <input type="text" placeholder="review" [(ngModel)]="review">
+    <input type="number" placeholder="score" [(ngModel)]="score">
     <button (click)="submitReview()" class="modal-button">Submit Review</button>
     <button (click)="showReview = false" class="modal-button">Close</button>
 </div>
-
-
-
   
-  <div *ngIf="showContact" class="modal">
-    <h3>Contact Owner</h3>
-    <div *ngIf="ownerInfo">
-      <p><strong>Name:</strong> {{ ownerInfo.name }} {{ ownerInfo.surname }}</p>
-      <p><strong>Email:</strong> {{ ownerInfo.email }}</p>
-      <p><strong>Telephone:</strong> {{ ownerInfo.telephone }}</p>
-      <p><strong>Social Media:</strong> {{ ownerInfo.social_media }}</p>
-      <button (click)="showContact = false" class="modal-button">Close</button>
-    </div>
-    <div *ngIf="!ownerInfo">
-      <p>No owner information available.</p>
-      <button (click)="showContact = false" class="modal-button">Close</button>
-    </div>
-  </div>
-  
+<div *ngIf="showContact" class="modal">
+<h3>Contact Owner</h3>
+<div *ngIf="ownerInfo">
+    <p><strong>Name:</strong> {{ ownerInfo.name }} {{ ownerInfo.surname }}</p>
+    <p><strong>Email:</strong> {{ ownerInfo.email }}</p>
+    <p><strong>Telephone:</strong> {{ ownerInfo.telephone }}</p>
+    <p><strong>Social Media:</strong> {{ ownerInfo.social_media }}</p>
+    <button (click)="showContact = false" class="modal-button">Close</button>
+</div>
+<div *ngIf="!ownerInfo">
+    <p>No owner information available.</p>
+    <button (click)="showContact = false" class="modal-button">Close</button>
+</div>
+</div>
+

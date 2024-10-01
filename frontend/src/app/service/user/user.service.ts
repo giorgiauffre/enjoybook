@@ -1,5 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,7 @@ export class UserService {
   constructor() { }
 
   httpClient = inject(HttpClient)
-  baseUrl = 'http://localhost:5004'
+  baseUrl = 'http://localhost:5000'
 
   public signup(data: any) {
     let headers = this.getHeaders();
@@ -18,27 +19,27 @@ export class UserService {
   
   public login(data: any) {
     let headers = this.getHeaders();
-    return this.httpClient.post(this.baseUrl + '/login', data, {headers: headers});
+    return this.httpClient.post(this.baseUrl + '/login', data, {headers: headers}).pipe(
+      tap((response: any) => {
+        this.setSession(response); 
+      })
+    );
   }
-  
+
   public updateUserInfo(username: string, data: any) {
     let headers = this.getHeaders();
     return this.httpClient.put(`${this.baseUrl}/user/${username}`, data, { headers: headers });
   }
-
   
   public deleteUser(username: string) {
     let headers = this.getHeaders();
     return this.httpClient.delete(`${this.baseUrl}/user/${username}`, { headers: headers });
-}
+  }
 
-
-getDetails(username: string) {
-  let headers = this.getHeaders();
-  return this.httpClient.get(`${this.baseUrl}/user/${username}`, { headers: headers });
-}
-
-
+  getDetails(username: string) {
+    let headers = this.getHeaders();
+    return this.httpClient.get(`${this.baseUrl}/user/${username}`, { headers: headers });
+  }
 
   public addReview(data: any) {
     let headers = this.getHeaders();
@@ -56,10 +57,12 @@ getDetails(username: string) {
         'Authorization': `Bearer ${localStorage.getItem('jwtToken')}` 
     });
     return headers;
-}
+  }
 
-
-
+  private setSession(authResult: any): void {
+    localStorage.setItem('jwtToken', authResult.access_token);
+    localStorage.setItem('username', authResult.username); 
+  }
 
  
 }

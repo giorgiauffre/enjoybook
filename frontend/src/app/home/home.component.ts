@@ -14,8 +14,7 @@ export class HomeComponent {
 
   handleLogin() {
       this.router.navigateByUrl('/login');
-    }
-  
+  }
 
   handleSignin() {
     this.router.navigateByUrl('/signin');

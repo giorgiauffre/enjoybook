@@ -49,7 +49,7 @@ export class SigninComponent {
         .subscribe({
           next: (data: any) => {
             console.log(data);
-            this.router.navigateByUrl('/initialPage');
+            this.router.navigateByUrl('/login');
           },
           error: (err) => console.log(err)
         });
