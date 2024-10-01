@@ -50,7 +50,6 @@ export class BookService {
     return this.httpClient.get<any[]>(`${this.baseUrl}/books/${bookId}/reviews`, { headers: this.getHeaders() });
   }
  
-
   notifyStatusChange(book: any) {
     this.bookStatusChange.next(book);
   }

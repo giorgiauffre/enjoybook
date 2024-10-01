@@ -9,11 +9,24 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class LoanService {
-
-  httpClient = inject(HttpClient);
-  router = inject(Router); 
-  baseUrl = 'http://localhost:5002'; 
-
+  
   constructor() { }
 
+  httpClient = inject(HttpClient);
+  baseUrl = 'http://localhost:5002';
+
+  getHeaders() {
+    let headers = new HttpHeaders({
+        'Content-Type': 'application/json; charset=utf-8',
+    });
+    return headers;
+  }
+
+  createLoan(loanData: any): Observable<any> {
+    return this.httpClient.post<any>(`${this.baseUrl}/loan`, loanData, { headers: this.getHeaders() });
+  }
+  
+  getLoans(user: any): Observable<any[]> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}/loans/${user}`, { headers: this.getHeaders() });
+  }
 }

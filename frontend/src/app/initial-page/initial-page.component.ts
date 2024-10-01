@@ -40,4 +40,9 @@ export class InitialPageComponent {
     this.router.navigateByUrl('userProfile');
   }
 
+  goToBookingHistory(){
+    this.router.navigateByUrl('bookingHistory');
+  }
+
+
 }

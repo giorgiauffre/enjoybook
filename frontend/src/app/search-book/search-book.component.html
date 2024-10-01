@@ -30,11 +30,12 @@
                 <p>Owner: {{ book.owner }}</p>
 
                <label >Status</label>
-               <input type="text" style="font-weight: bold;" disabled [(ngModel)]="book.status"/>
+               <input type="text" class="status" [ngStyle]="book.status=='Available'? {'color':'green'} : {'color':'red'}" [(ngModel)]="book.status" disabled/>
 
                 <button class="review-button" (click)="addReviewModal(book)">Leave a Review</button>
                 <button class="read-button" (click)="reviewListModal(book)">Show Review</button>
                 <button class="contact-button" (click)="contactInfoModal(book)">Contact Owner</button>
+                <button class="contact-button" (click)="createLoan(book)" [disabled]="book.status != 'Available'" >Book it!</button>
             </div>
         </div>
     </div>
@@ -55,31 +56,27 @@
 <div *ngIf="showReviewList" class="modal">
     <h3>Review List</h3>
     <div class="container" *ngFor="let review of reviews">
-        <p><strong>description:</strong> {{ review.description }}</p>
-        <p><strong>username:</strong> {{ review.username }}</p>
+        <p><strong>Description:</strong> {{ review.description }}</p>
+        <p><strong>Username:</strong> {{ review.user }}</p>
     </div>
-    <div *ngIf="reviews.length < 1">
+    <div *ngIf="reviews == undefined || reviews.length < 1">
         <p>No review available.</p>
     </div>
     <button (click)="showReviewList = false" class="modal-button">Close</button>
 </div>
-    
-
-
 
 
 <div *ngIf="showContactInfo" class="modal">
-<h3>Contact Owner</h3>
-<div *ngIf="ownerInfo">
-    <p><strong>Name:</strong> {{ ownerInfo.name }} {{ ownerInfo.surname }}</p>
-    <p><strong>Email:</strong> {{ ownerInfo.email }}</p>
-    <p><strong>Telephone:</strong> {{ ownerInfo.telephone }}</p>
-    <p><strong>Social Media:</strong> {{ ownerInfo.social_media }}</p>
+    <h3>Contact Owner Info</h3>
+    <div *ngIf="ownerInfo">
+        <p><strong>Name:</strong> {{ ownerInfo.name }} {{ ownerInfo.surname }}</p>
+        <p><strong>Email:</strong> {{ ownerInfo.email }}</p>
+        <p><strong>Telephone:</strong> {{ ownerInfo.telephone }}</p>
+        <p><strong>Social Media:</strong> {{ ownerInfo.social_media }}</p>
+    </div>
+    <div *ngIf="!ownerInfo">
+        <p>No owner information available.</p>
+    </div>
     <button (click)="showContactInfo = false" class="modal-button">Close</button>
-</div>
-<div *ngIf="!ownerInfo">
-    <p>No owner information available.</p>
-    <button (click)="showContactInfo = false" class="modal-button">Close</button>
-</div>
 </div>
 

@@ -16,6 +16,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { ListBookComponent } from './list-book/list-book.component';
 import { HttpClientModule } from '@angular/common/http';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BookingHistoryComponent } from './booking-history/booking-history.component';
 
 
 @NgModule({
@@ -28,8 +29,10 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
     UploadBookComponent,
     ConfirmDialogLogoutComponent,
     SearchBookComponent,
+    BookingHistoryComponent,
     ListBookComponent,
     UserProfileComponent,
+    BookingHistoryComponent,
   ],
   imports: [
     BrowserModule,

@@ -19,8 +19,7 @@
                 <p><strong>Description:</strong> {{ book.description }}</p>
                 <button (click)="deleteBook(book.id)" class="delete-button">Delete</button>
                 <button (click)="openEditModal(book)" class="modify-button">Modify</button>
-                <button (click)="clickAvailable(book)" class="available-button">Available</button>
-                <button (click)="clickNotAvailable(book)" class="notavailable-button"> Not Available</button>
+                <button (click)="updateStatusBook(book)" [(ngModel)]="book.status" class="status-button" [ngStyle]="book.status=='Available'? {'background-color':'#3e7a06'} : {'background-color':'#a34c06'}" >{{book.status}}</button>
             </article>
         </div>
     </section>

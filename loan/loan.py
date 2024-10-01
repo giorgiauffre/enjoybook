@@ -15,34 +15,34 @@ CORS(app)
 
 class Loan(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    user1 = db.Column(db.String(50), nullable=False)
-    user2 = db.Column(db.String(50), nullable=False)
+    owner = db.Column(db.String(50), nullable=False)
+    booker = db.Column(db.String(50), nullable=False)
     book_id = db.Column(db.String(50), nullable=False)
 
     def serialize(self):
         return {
             'id': self.id,
-            'user1': self.user1,
-            'user2': self.user2,
+            'owner': self.owner,
+            'booker': self.booker,
             'book_id': self.book_id
         }
 
 @app.route('/loans/<user_id>', methods=['GET'])
 def get_loans(user_id):
-    loans = Loan.query.filter((Loan.user1 == user_id) | (Loan.user2 == user_id)).all()
+    loans = Loan.query.filter((Loan.owner == user_id) | (Loan.booker == user_id)).all()
     return jsonify([loan.serialize() for loan in loans]), 200
 
-@app.route('/loans', methods=['POST'])
+@app.route('/loan', methods=['POST'])
 def create_loan():
     data = request.get_json()
-    user1 = data.get('user1')
-    user2 = data.get('user2')
+    owner = data.get('owner')
+    booker = data.get('booker')
     book_id = data.get('book_id')
 
-    if not user1 or not user2 or not book_id:
+    if not owner or not booker or not book_id:
         return jsonify({'message': 'Missing data'}), 400
 
-    new_loan = Loan(user1=user1, user2=user2, book_id=book_id)
+    new_loan = Loan(owner=owner, booker=booker, book_id=book_id)
 
     db.session.add(new_loan)
     db.session.commit()

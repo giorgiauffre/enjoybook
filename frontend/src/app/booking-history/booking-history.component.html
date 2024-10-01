@@ -1,0 +1,22 @@
+<div class="container">
+    <header class="header">
+        <a href="initialPage" class="back-button" aria-label="Torna alla pagina iniziale">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+        </a>
+    </header>
+
+    <section *ngIf="loans && loans.length > 0">
+        <h1>BOOKING HISTORY</h1>
+        <div class="book-list">
+            <article *ngFor="let loan of loans" class="book-card">
+                <h2>booking #{{loans.indexOf(loan) + 1}}</h2>
+                <p><strong>Owner:</strong> {{ loan.owner }}</p>
+                <p><strong>Booker:</strong> {{ loan.booker }}</p>
+                <p><strong>Book:</strong> {{ loan.book_id }}</p>
+            </article>
+        </div>
+    </section>
+
+  </div>

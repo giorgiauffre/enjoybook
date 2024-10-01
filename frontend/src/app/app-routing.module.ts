@@ -8,6 +8,7 @@ import { UploadBookComponent } from './upload-book/upload-book.component';
 import { SearchBookComponent } from './search-book/search-book.component';
 import { ListBookComponent } from './list-book/list-book.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
+import { BookingHistoryComponent } from './booking-history/booking-history.component';
 
 const routes: Routes = [
 
@@ -17,6 +18,7 @@ const routes: Routes = [
   {path: 'initialPage', component: InitialPageComponent}, 
   {path: 'uploadBook', component: UploadBookComponent}, 
   {path: 'searchBook', component: SearchBookComponent}, 
+  {path: 'bookingHistory', component: BookingHistoryComponent}, 
   {path: 'listBook', component:ListBookComponent}, 
   {path: 'userProfile', component:UserProfileComponent}, 
 

@@ -36,7 +36,7 @@ export class UserService {
     return this.httpClient.delete(`${this.baseUrl}/user/${username}`, { headers: headers });
   }
 
-  getDetails(username: string) {
+  public getDetails(username: string) {
     let headers = this.getHeaders();
     return this.httpClient.get(`${this.baseUrl}/user/${username}`, { headers: headers });
   }

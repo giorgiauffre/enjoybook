@@ -68,31 +68,20 @@ export class ListBookComponent implements OnInit {
       }
     );
   }
-  clickAvailable(book: any) {
-    book.status = 'Available'; 
+  updateStatusBook(book: any) {
+    if(book.status == 'Available'){
+      book.status = 'Not Available'
+    } else {
+      book.status = 'Available'
+    }
     this.bookService.updateBook(book.id, book).subscribe(
       () => {
-        console.log('Book marked as Available');
-        this.bookService.notifyStatusChange(book); 
+        console.log('Updated status');
       },
       (error) => {
         console.error('Error updating status:', error);
       }
     );
-  }
-  
-  clickNotAvailable(book: any) {
-    book.status = 'Not Available'; 
-    this.bookService.updateBook(book.id, book).subscribe(
-      () => {
-        console.log('Book marked as Not Available');
-        this.bookService.notifyStatusChange(book); 
-      },
-      (error) => {
-        console.error('Error updating status:', error);
-      }
-    );
-  }
-  
+  } 
 
 }

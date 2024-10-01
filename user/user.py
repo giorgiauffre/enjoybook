@@ -109,12 +109,7 @@ def delete_user(username):
 
 # Route to retrieve specific user info
 @app.route('/user/<username>', methods=['GET'])
-@jwt_required()
 def get_user(username):
-    current_user = get_jwt_identity()
-    if current_user != username:
-        return jsonify({"message": "Unauthorized"}), 403
-    
     user = User.query.filter_by(username=username).first()
     if user:
         user_info = {

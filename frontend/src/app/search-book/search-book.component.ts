@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { BookService } from '../service/book/book.service';
 import { UserService } from '../service/user/user.service'; 
+import { LoanService } from '../service/loan/loan.service';
 
 @Component({
   selector: 'app-search-book',
@@ -19,10 +20,10 @@ export class SearchBookComponent {
   ownerInfo: any ;
   reviews: any;
   user_id: any;
+  username: any;
 
 
-  constructor(private bookService: BookService) {} 
-
+  constructor(private bookService: BookService, private userService: UserService, private loanService: LoanService) {} 
 
   ngOnInit() {
     this.bookService.getBookStatusChange().subscribe((updatedBook) => {
@@ -33,6 +34,8 @@ export class SearchBookComponent {
         }
       }
     });
+    
+    this.username = localStorage.getItem('username');
   }
 
   searchBooks() {
@@ -58,6 +61,16 @@ export class SearchBookComponent {
     this.showContactInfo = true; 
     this.showAddReview = false; 
     this.showReviewList = false; 
+
+    this.userService.getDetails(this.username).subscribe(
+      (response) => {
+        this.ownerInfo = response; 
+        console.log(this.books); 
+      },
+      (error) => {
+        console.error('Error inserting review:', error); 
+      }
+    );
 }
 
   reviewListModal(book: any) {
@@ -76,13 +89,36 @@ export class SearchBookComponent {
       }
     );
   }
+  
+  createLoan(book: any) {
+    const loanData = {
+      owner: book.owner,
+      booker: this.username,
+      book_id: book.id,
+    };
+
+    this.loanService.createLoan(loanData).subscribe(
+      (response) => {
+        if(book.status == 'Available'){
+          book.status = 'Not Available'
+        } else {
+          book.status = 'Available'
+        }
+        alert('Booking success!');
+        console.log(this.books); 
+      },
+      (error) => {
+        console.error('Error in booking process:', error); 
+      }
+    );
+  }
 
   submitReview() {
     const reviewData = {
       description: this.review,
       score: this.score,
       book_id: this.selectedBook.id,
-      username: localStorage.getItem('username')
+      user: this.username
     };
 
     this.bookService.addReview(this.selectedBook.id, reviewData).subscribe(() => {
@@ -90,4 +126,5 @@ export class SearchBookComponent {
       this.showAddReview = false;
     });
   }
+
 }
