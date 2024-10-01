@@ -61,19 +61,12 @@ export class SearchBookComponent {
     this.showRead = false; 
 }
 
-<<<<<<< HEAD
-// aggiungere la funzione retrieve info by username
-=======
-clickReadReview(book: any) {
-  this.selectedBook = book; 
-  this.showContact = false; 
-  this.showReview = false; 
-  this.showRead = true; 
-}
-
-  
-    
->>>>>>> eb5072bcc9de5ad2cad322b53dbd6627b591f063
+  clickReadReview(book: any) {
+    this.selectedBook = book; 
+    this.showContact = false; 
+    this.showReview = false; 
+    this.showRead = true; 
+  }
 
   submitReview() {
     const reviewData = {
