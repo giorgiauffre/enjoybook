@@ -13,12 +13,13 @@ export class SearchBookComponent {
   selectedBook: any = null;  
   score: any = 0;
   review: string = '';     
-  showContact: boolean = false; 
-  showReview: boolean = false;  
-  showRead: boolean = false;  
-  ownerInfo: any = null; 
-  reviewInfo: any = null; 
-  username: string; 
+  showContactInfo: boolean = false; 
+  showAddReview: boolean = false;  
+  showReviewList: boolean = false;  
+  ownerInfo: any ;
+  reviews: any;
+  user_id: any;
+
 
   constructor(private bookService: BookService) {} 
 
@@ -44,28 +45,36 @@ export class SearchBookComponent {
       this.books = data; 
     });
   }
-
- 
   
-  openReviewModal(book: any) {
+  addReviewModal(book: any) {
     this.selectedBook = book; 
-    this.showReview = true;   
-    this.showContact = false; 
-    this.showRead = false; 
+    this.showAddReview = true;   
+    this.showContactInfo = false; 
+    this.showReviewList = false; 
   }
 
-  showContactInfo(book: any) {
+  contactInfoModal(book: any) {
     this.selectedBook = book; 
-    this.showContact = true; 
-    this.showReview = false; 
-    this.showRead = false; 
+    this.showContactInfo = true; 
+    this.showAddReview = false; 
+    this.showReviewList = false; 
 }
 
-  clickReadReview(book: any) {
+  reviewListModal(book: any) {
     this.selectedBook = book; 
-    this.showContact = false; 
-    this.showReview = false; 
-    this.showRead = true; 
+    this.showContactInfo = false; 
+    this.showAddReview = false; 
+    this.showReviewList = true; 
+
+    this.bookService.getReviews(this.selectedBook.id).subscribe(
+      (response) => {
+        this.reviews = response; 
+        console.log(this.books); 
+      },
+      (error) => {
+        console.error('Error inserting review:', error); 
+      }
+    );
   }
 
   submitReview() {
@@ -73,12 +82,12 @@ export class SearchBookComponent {
       description: this.review,
       score: this.score,
       book_id: this.selectedBook.id,
-      username: this.username  
+      username: localStorage.getItem('username')
     };
 
     this.bookService.addReview(this.selectedBook.id, reviewData).subscribe(() => {
-      this.showReview = false;
-      this.clickReadReview(this.selectedBook);
+      this.review = ''; 
+      this.showAddReview = false;
     });
   }
 }

@@ -46,8 +46,8 @@ export class BookService {
     return this.httpClient.post<any>(`${this.baseUrl}/books/${bookId}/reviews`, reviewData, { headers: this.getHeaders() });
   }
 
-  getReviews(book_id: any): Observable<any> {
-    return this.httpClient.get<any[]>(`${this.baseUrl}/books/${book_id}/reviews`, { headers: this.getHeaders() });
+  getReviews(bookId: any): Observable<any> {
+    return this.httpClient.get<any[]>(`${this.baseUrl}/books/${bookId}/reviews`, { headers: this.getHeaders() });
   }
  
 

@@ -29,7 +29,7 @@ class Review(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     description = db.Column(db.String, nullable = True)
     score = db.Column(db.Integer, nullable=False)
- #   user_id = db.Column(db.Integer, nullable=False)
+    username = db.Column(db.String, nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey('book.id'), nullable=False)
 
 # app.py
@@ -106,13 +106,13 @@ def add_review(book_id):
 @app.route('/books/<book_id>/reviews', methods=['GET'])
 def get_reviews(book_id):
     reviews = Review.query.filter_by(book_id=book_id).all()
-    return jsonify([{'id': review.id, 'score': review.score, 'book_id': review.book_id} for review in reviews])
+    return jsonify([{'id': review.id, 'username': review.username, 'description': review.description, 'score': review.score, 'book_id': review.book_id} for review in reviews])
 
 @app.route('/search', methods=['GET'])
 def search_books():
     query = request.args.get('q')
     books = Book.query.filter(Book.title.contains(query) | Book.author.contains(query)).all()
-    books_list = [{'id': book.id, 'title': book.title, 'author': book.author, 'genre': book.genre, 'year': book.year, 'language': book.language, 'description': book.description, 'owner':book.owner } for book in books]
+    books_list = [{'id': book.id, 'title': book.title, 'author': book.author, 'genre': book.genre, 'year': book.year, 'language': book.language, 'status': book.status, 'description': book.description, 'owner':book.owner } for book in books]
     return jsonify(books_list)
 
 

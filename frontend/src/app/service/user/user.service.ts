@@ -10,7 +10,7 @@ export class UserService {
   constructor() { }
 
   httpClient = inject(HttpClient)
-  baseUrl = 'http://localhost:5004'
+  baseUrl = 'http://localhost:5000'
 
   public signup(data: any) {
     let headers = this.getHeaders();
