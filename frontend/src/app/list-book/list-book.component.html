@@ -19,6 +19,8 @@
                 <p><strong>Description:</strong> {{ book.description }}</p>
                 <button (click)="deleteBook(book.id)" class="delete-button">Delete</button>
                 <button (click)="openEditModal(book)" class="modify-button">Modify</button>
+                <button (click)="clickAvailable(book)" class="available-button">Available</button>
+                <button (click)="clickNotAvailable(book)" class="notavailable-button"> Not Available</button>
             </article>
         </div>
     </section>

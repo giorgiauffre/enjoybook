@@ -23,23 +23,44 @@
             <div class="card-content">
                 <h3 style="font-weight: bold;">{{ book.title }}</h3>
                 <p>Author: {{ book.author }}</p>
+                
+               <label >Status</label>
+               <input type= "text" disabled>
+
                 <button class="review-button" (click)="openReviewModal(book)">Leave a Review</button>
+                <button class="read-button" (click)="clickReadReview(book)">Show Review</button>
                 <button class="contact-button" (click)="showContactInfo(book)">Contact Owner</button>
             </div>
         </div>
     </div>
 </div>
 
-<div *ngIf="showReview || showContact" class="modal-backdrop"></div>
+<div *ngIf="showReview || showContact || showRead" class="modal-backdrop"></div>
 
 <div *ngIf="showReview" class="modal">
     <h2>Leave a Review</h2>
     <input type="text" placeholder="review" [(ngModel)]="review">
-    <input type="number" placeholder="score" [(ngModel)]="score">
     <button (click)="submitReview()" class="modal-button">Submit Review</button>
     <button (click)="showReview = false" class="modal-button">Close</button>
 </div>
   
+  
+<div *ngIf="showRead" class="modal">
+    <h3>Read Review</h3>
+    <div *ngIf="reviewInfo">
+        <p><strong>username:</strong> {{ reviewInfo.review }}</p>
+        <button (click)="showRead = false" class="modal-button">Close</button>
+    </div>
+    <div *ngIf="!reviewInfo">
+        <p>No review available.</p>
+        <button (click)="showRead = false" class="modal-button">Close</button>
+    </div>
+    </div>
+    
+
+
+
+
 <div *ngIf="showContact" class="modal">
 <h3>Contact Owner</h3>
 <div *ngIf="ownerInfo">

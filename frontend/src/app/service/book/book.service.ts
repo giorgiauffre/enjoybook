@@ -1,6 +1,7 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -8,6 +9,8 @@ import { Observable } from 'rxjs';
 export class BookService {
 
   constructor() { }
+
+  private bookStatusChange = new BehaviorSubject<any>(null);
 
   httpClient = inject(HttpClient);
   baseUrl = 'http://localhost:5001';
@@ -46,5 +49,14 @@ export class BookService {
   getReviews(book_id: any): Observable<any> {
     return this.httpClient.get<any[]>(`${this.baseUrl}/books/${book_id}/reviews`, { headers: this.getHeaders() });
   }
-  
+ 
+
+  notifyStatusChange(book: any) {
+    this.bookStatusChange.next(book);
+  }
+
+  getBookStatusChange(): Observable<any> {
+    return this.bookStatusChange.asObservable();
+  }
+
 }

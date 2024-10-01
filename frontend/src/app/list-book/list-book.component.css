@@ -189,3 +189,35 @@ button[type="button"]:hover {
 .modify-button:hover {
     background-color: #0056b3; 
 }
+
+
+.notavailable-button {
+    background-color: #f78e05; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-right: 10px; 
+    transition: background-color 0.3s; 
+}
+
+.notavailable-button:hover {
+    background-color: #a34c06; 
+}
+
+.available-button {
+    background-color: #05f70d; 
+    color: white; 
+    border: none; 
+    padding: 10px 15px; 
+    border-radius: 5px; 
+    cursor: pointer; 
+    margin-left: 10px; 
+    margin-right: 10px;
+    transition: background-color 0.3s; 
+}
+
+.available-button:hover {
+    background-color: #3e7a06; 
+}
