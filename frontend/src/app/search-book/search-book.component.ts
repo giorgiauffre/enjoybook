@@ -62,7 +62,7 @@ export class SearchBookComponent {
     this.showAddReview = false; 
     this.showReviewList = false; 
 
-    this.userService.getDetails(this.username).subscribe(
+    this.userService.getDetails(this.selectedBook.owner).subscribe(
       (response) => {
         this.ownerInfo = response; 
         console.log(this.books); 
@@ -105,6 +105,14 @@ export class SearchBookComponent {
           book.status = 'Available'
         }
         alert('Booking success!');
+        this.bookService.updateBook(book.id, book).subscribe(
+          () => {
+            console.log('Updated status');
+          },
+          (error) => {
+            console.error('Error updating status:', error);
+          }
+        );
         console.log(this.books); 
       },
       (error) => {

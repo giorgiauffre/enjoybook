@@ -19,4 +19,7 @@
         </div>
     </section>
 
+    <section *ngIf="loans == undefined || loans.length === 0">
+        <p class="no-loans-message">No bookings available.</p>
+    </section>
   </div>
